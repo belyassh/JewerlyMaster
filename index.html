@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atelier Lumiere | Украшения ручной работы</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="backdrop-glow"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#hero">
+      <span class="brand-mark">AL</span>
+      <span class="brand-text">
+        <strong>Atelier Lumiere</strong>
+        <small>Jewerly Marketplace</small>
+      </span>
+    </a>
+
+    <nav class="topbar-actions">
+      <button class="icon-btn" id="wishlistBtn" aria-label="Открыть вишлист">
+        Вишлист <span class="badge" id="wishlistCount">0</span>
+      </button>
+      <button class="icon-btn" id="cartBtn" aria-label="Открыть корзину">
+        Корзина <span class="badge" id="cartCount">0</span>
+      </button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <div class="hero-content">
+        <p class="eyebrow">Новая коллекция 2026</p>
+        <h1>Украшения с характером, созданные вручную</h1>
+        <p class="hero-lead">
+          Платформа ювелирного мастера: витрина, корзина, вишлист и оформление заказа на почту в одном месте.
+          Все сохраняется локально, чтобы вы могли быстро стартовать проект и масштабировать его дальше.
+        </p>
+        <div class="hero-actions">
+          <a class="primary-btn" href="#catalog">Смотреть каталог</a>
+          <button class="ghost-btn" id="goToTopSellers">Топ продаж</button>
+        </div>
+      </div>
+
+      <aside class="hero-card" id="topSellersBlock">
+        <h2>Топ месяца</h2>
+        <ul id="topSellersList"></ul>
+      </aside>
+    </section>
+
+    <section class="controls" id="catalog">
+      <div class="search-wrap">
+        <input id="searchInput" type="search" placeholder="Поиск: кольцо, серьги, золото..." />
+      </div>
+
+      <div class="filters" id="categoryFilters"></div>
+
+      <div class="sort-wrap">
+        <label for="sortSelect">Сортировка</label>
+        <select id="sortSelect">
+          <option value="popular">Сначала популярные</option>
+          <option value="price-asc">По цене: дешевле</option>
+          <option value="price-desc">По цене: дороже</option>
+          <option value="rating">По рейтингу</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="products-grid" id="productsGrid"></section>
+
+    <section class="benefits">
+      <article>
+        <h3>Премиальная подача</h3>
+        <p>Арт-дирекшн интерфейса с акцентом на материалы, ручную работу и уникальность изделия.</p>
+      </article>
+      <article>
+        <h3>Marketplace-логика</h3>
+        <p>Корзина, вишлист, форма заказа и кэш в localStorage без бекенда.</p>
+      </article>
+      <article>
+        <h3>Готово к масштабированию</h3>
+        <p>Можно подключить API, Stripe/CloudPayments и сервер авторизации без переписывания UI-ядра.</p>
+      </article>
+    </section>
+  </main>
+
+  <aside class="drawer" id="wishlistDrawer" aria-hidden="true">
+    <div class="drawer-head">
+      <h2>Ваш вишлист</h2>
+      <button class="close-btn" data-close="wishlistDrawer">Закрыть</button>
+    </div>
+    <div class="drawer-content" id="wishlistItems"></div>
+  </aside>
+
+  <aside class="drawer" id="cartDrawer" aria-hidden="true">
+    <div class="drawer-head">
+      <h2>Ваша корзина</h2>
+      <button class="close-btn" data-close="cartDrawer">Закрыть</button>
+    </div>
+    <div class="drawer-content" id="cartItems"></div>
+    <div class="drawer-footer" id="cartSummary"></div>
+  </aside>
+
+  <div class="modal" id="checkoutModal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="drawer-head">
+        <h2>Оформление заказа</h2>
+        <button class="close-btn" data-close="checkoutModal">Закрыть</button>
+      </div>
+
+      <form id="checkoutForm" class="checkout-form">
+        <label>
+          Имя
+          <input type="text" name="name" placeholder="Например, Алина" required />
+        </label>
+        <label>
+          Телефон
+          <input type="tel" name="phone" placeholder="+7 (999) 123-45-67" required />
+        </label>
+        <label>
+          Email
+          <input type="email" name="email" placeholder="name@email.com" required />
+        </label>
+        <label>
+          Город
+          <input type="text" name="city" placeholder="Москва" />
+        </label>
+        <label class="full-row">
+          Комментарий к заказу
+          <textarea name="comment" rows="3" placeholder="Укажите удобный способ связи, сроки или пожелания"></textarea>
+        </label>
+
+        <div class="hero-actions">
+          <button type="submit" class="primary-btn">Отправить на почту мастеру</button>
+        </div>
+      </form>
+
+      <section class="orders-block">
+        <h3>Состав заказа</h3>
+        <ul id="checkoutOrderLines"></ul>
+      </section>
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay"></div>
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
